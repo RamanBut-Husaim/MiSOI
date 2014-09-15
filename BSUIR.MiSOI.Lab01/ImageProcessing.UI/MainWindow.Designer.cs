@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +41,12 @@
             this.btn_Solarization = new System.Windows.Forms.Button();
             this.btn_Stamping = new System.Windows.Forms.Button();
             this.btn_Halftone = new System.Windows.Forms.Button();
+            this.lbl_cConst = new System.Windows.Forms.Label();
+            this.txtbx_cConst = new System.Windows.Forms.TextBox();
+            this.lbl_exp = new System.Windows.Forms.Label();
+            this.txtbx_exp = new System.Windows.Forms.TextBox();
+            this.btn_gamma = new System.Windows.Forms.Button();
+            this.btn_log = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorHistogram)).BeginInit();
             this.SuspendLayout();
@@ -72,10 +78,10 @@
             // 
             // colorHistogram
             // 
-            chartArea2.Name = "ChartArea1";
-            this.colorHistogram.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.colorHistogram.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.colorHistogram.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.colorHistogram.Legends.Add(legend1);
             this.colorHistogram.Location = new System.Drawing.Point(13, 28);
             this.colorHistogram.Name = "colorHistogram";
             this.colorHistogram.Size = new System.Drawing.Size(615, 392);
@@ -152,11 +158,69 @@
             this.btn_Halftone.UseVisualStyleBackColor = true;
             this.btn_Halftone.Click += new System.EventHandler(this.btn_Halftone_Click);
             // 
+            // lbl_cConst
+            // 
+            this.lbl_cConst.AutoSize = true;
+            this.lbl_cConst.Location = new System.Drawing.Point(635, 254);
+            this.lbl_cConst.Name = "lbl_cConst";
+            this.lbl_cConst.Size = new System.Drawing.Size(14, 13);
+            this.lbl_cConst.TabIndex = 9;
+            this.lbl_cConst.Text = "C";
+            // 
+            // txtbx_cConst
+            // 
+            this.txtbx_cConst.Location = new System.Drawing.Point(655, 251);
+            this.txtbx_cConst.Name = "txtbx_cConst";
+            this.txtbx_cConst.Size = new System.Drawing.Size(52, 20);
+            this.txtbx_cConst.TabIndex = 10;
+            // 
+            // lbl_exp
+            // 
+            this.lbl_exp.AutoSize = true;
+            this.lbl_exp.Location = new System.Drawing.Point(632, 287);
+            this.lbl_exp.Name = "lbl_exp";
+            this.lbl_exp.Size = new System.Drawing.Size(25, 13);
+            this.lbl_exp.TabIndex = 11;
+            this.lbl_exp.Text = "Exp";
+            // 
+            // txtbx_exp
+            // 
+            this.txtbx_exp.Location = new System.Drawing.Point(655, 284);
+            this.txtbx_exp.Name = "txtbx_exp";
+            this.txtbx_exp.Size = new System.Drawing.Size(52, 20);
+            this.txtbx_exp.TabIndex = 12;
+            // 
+            // btn_gamma
+            // 
+            this.btn_gamma.Location = new System.Drawing.Point(635, 315);
+            this.btn_gamma.Name = "btn_gamma";
+            this.btn_gamma.Size = new System.Drawing.Size(75, 23);
+            this.btn_gamma.TabIndex = 13;
+            this.btn_gamma.Text = "Gamma";
+            this.btn_gamma.UseVisualStyleBackColor = true;
+            this.btn_gamma.Click += new System.EventHandler(this.btn_gamma_Click);
+            // 
+            // btn_log
+            // 
+            this.btn_log.Location = new System.Drawing.Point(635, 345);
+            this.btn_log.Name = "btn_log";
+            this.btn_log.Size = new System.Drawing.Size(75, 23);
+            this.btn_log.TabIndex = 14;
+            this.btn_log.Text = "Log";
+            this.btn_log.UseVisualStyleBackColor = true;
+            this.btn_log.Click += new System.EventHandler(this.btn_log_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 435);
+            this.Controls.Add(this.btn_log);
+            this.Controls.Add(this.btn_gamma);
+            this.Controls.Add(this.txtbx_exp);
+            this.Controls.Add(this.lbl_exp);
+            this.Controls.Add(this.txtbx_cConst);
+            this.Controls.Add(this.lbl_cConst);
             this.Controls.Add(this.btn_Halftone);
             this.Controls.Add(this.btn_Stamping);
             this.Controls.Add(this.btn_Solarization);
@@ -190,6 +254,12 @@
         private System.Windows.Forms.Button btn_Solarization;
         private System.Windows.Forms.Button btn_Stamping;
         private System.Windows.Forms.Button btn_Halftone;
+        private System.Windows.Forms.Label lbl_cConst;
+        private System.Windows.Forms.TextBox txtbx_cConst;
+        private System.Windows.Forms.Label lbl_exp;
+        private System.Windows.Forms.TextBox txtbx_exp;
+        private System.Windows.Forms.Button btn_gamma;
+        private System.Windows.Forms.Button btn_log;
     }
 }
 

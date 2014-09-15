@@ -119,6 +119,8 @@ namespace ImageProcessing.UI
                     imageProcessor.SaveChanges("solarize.jpg");
                 }
             }
+
+            MessageBox.Show("The operation has been completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_Stamping_Click(object sender, EventArgs e)
@@ -132,6 +134,8 @@ namespace ImageProcessing.UI
                     imageProcessor.SaveChanges("stamping.jpg");
                 }
             }
+
+            MessageBox.Show("The operation has been completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_Halftone_Click(object sender, EventArgs e)
@@ -144,6 +148,57 @@ namespace ImageProcessing.UI
                     imageProcessor.ApplyFilter(filter);
                     imageProcessor.SaveChanges("halftone.jpg");
                 }
+            }
+
+            MessageBox.Show("The operation has been completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btn_gamma_Click(object sender, EventArgs e)
+        {
+            double c;
+            double exp;
+
+            if (double.TryParse(this.txtbx_cConst.Text, out c) && double.TryParse(this.txtbx_exp.Text, out exp))
+            {
+                using (var bitMap = new Bitmap(this._filePath))
+                {
+                    using (var imageProcessor = new ImageProcessor(bitMap))
+                    {
+                        IFilter filter = this._filterBuilder.CreateGammaFilter(c, exp);
+                        imageProcessor.ApplyFilter(filter);
+                        imageProcessor.SaveChanges("gamma.jpg");
+                    }
+                }
+
+                MessageBox.Show("The operation has been completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Parameters are invalid", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_log_Click(object sender, EventArgs e)
+        {
+            double c;
+
+            if (double.TryParse(this.txtbx_cConst.Text, out c))
+            {
+                using (var bitMap = new Bitmap(this._filePath))
+                {
+                    using (var imageProcessor = new ImageProcessor(bitMap))
+                    {
+                        IFilter filter = this._filterBuilder.CreateLogarithmicFilter(c);
+                        imageProcessor.ApplyFilter(filter);
+                        imageProcessor.SaveChanges("log.jpg");
+                    }
+                }
+
+                MessageBox.Show("The operation has been completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Parameters are invalid", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

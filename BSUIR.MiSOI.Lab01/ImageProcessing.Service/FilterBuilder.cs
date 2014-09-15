@@ -21,5 +21,15 @@
         {
             return new BinaryHalftoneFilter();
         }
+
+        public IFilter CreateGammaFilter(double c, double exp)
+        {
+            return new GammaFilter(c, exp);
+        }
+
+        public IFilter CreateLogarithmicFilter(double c)
+        {
+            return new LogarithmicFilter(c);
+        }
     }
 }

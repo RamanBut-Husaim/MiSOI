@@ -9,5 +9,9 @@
         IFilter CreateStampingLinearFilter();
 
         IFilter CreateBinaryHalftoneFilter();
+
+        IFilter CreateGammaFilter(double c, double exp);
+
+        IFilter CreateLogarithmicFilter(double c);
     }
 }

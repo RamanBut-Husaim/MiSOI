@@ -116,7 +116,7 @@ namespace ImageProcessing.UI
                 {
                     IFilter filter = this._filterBuilder.CreateSolarizationFilter(0.01);
                     imageProcessor.ApplyFilter(filter);
-                    imageProcessor.SaveChanges("result.jpg");
+                    imageProcessor.SaveChanges("solarize.jpg");
                 }
             }
         }
@@ -129,7 +129,20 @@ namespace ImageProcessing.UI
                 {
                     IFilter filter = this._filterBuilder.CreateStampingLinearFilter();
                     imageProcessor.ApplyFilter(filter);
-                    imageProcessor.SaveChanges("result.jpg");
+                    imageProcessor.SaveChanges("stamping.jpg");
+                }
+            }
+        }
+
+        private void btn_Halftone_Click(object sender, EventArgs e)
+        {
+            using (var bitMap = new Bitmap(this._filePath))
+            {
+                using (var imageProcessor = new ImageProcessor(bitMap))
+                {
+                    IFilter filter = this._filterBuilder.CreateBinaryHalftoneFilter();
+                    imageProcessor.ApplyFilter(filter);
+                    imageProcessor.SaveChanges("halftone.jpg");
                 }
             }
         }

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +40,7 @@
             this.btn_RGBChannels = new System.Windows.Forms.Button();
             this.btn_Solarization = new System.Windows.Forms.Button();
             this.btn_Stamping = new System.Windows.Forms.Button();
+            this.btn_Halftone = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorHistogram)).BeginInit();
             this.SuspendLayout();
@@ -71,10 +72,10 @@
             // 
             // colorHistogram
             // 
-            chartArea1.Name = "ChartArea1";
-            this.colorHistogram.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.colorHistogram.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.colorHistogram.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.colorHistogram.Legends.Add(legend2);
             this.colorHistogram.Location = new System.Drawing.Point(13, 28);
             this.colorHistogram.Name = "colorHistogram";
             this.colorHistogram.Size = new System.Drawing.Size(615, 392);
@@ -141,11 +142,22 @@
             this.btn_Stamping.UseVisualStyleBackColor = true;
             this.btn_Stamping.Click += new System.EventHandler(this.btn_Stamping_Click);
             // 
+            // btn_Halftone
+            // 
+            this.btn_Halftone.Location = new System.Drawing.Point(635, 208);
+            this.btn_Halftone.Name = "btn_Halftone";
+            this.btn_Halftone.Size = new System.Drawing.Size(75, 23);
+            this.btn_Halftone.TabIndex = 8;
+            this.btn_Halftone.Text = "Halftone";
+            this.btn_Halftone.UseVisualStyleBackColor = true;
+            this.btn_Halftone.Click += new System.EventHandler(this.btn_Halftone_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 435);
+            this.Controls.Add(this.btn_Halftone);
             this.Controls.Add(this.btn_Stamping);
             this.Controls.Add(this.btn_Solarization);
             this.Controls.Add(this.btn_RGBChannels);
@@ -177,6 +189,7 @@
         private System.Windows.Forms.Button btn_RGBChannels;
         private System.Windows.Forms.Button btn_Solarization;
         private System.Windows.Forms.Button btn_Stamping;
+        private System.Windows.Forms.Button btn_Halftone;
     }
 }
 

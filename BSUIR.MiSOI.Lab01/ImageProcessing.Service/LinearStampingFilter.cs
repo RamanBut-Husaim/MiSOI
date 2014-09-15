@@ -10,13 +10,13 @@ namespace ImageProcessing.Service
         protected override void ApplyInternal(byte[] imageBytes, int rowWidth)
         {
             int height = imageBytes.Length / rowWidth;
-            int pixelRowWidth = (rowWidth - 1) / 3;
+            int pixelRowWidth = rowWidth / 3;
 
             var sourceBytes = imageBytes.Clone() as byte[];
 
             for (int i = 1; i < height - 1; ++i)
             {
-                for (int j = 1; j < pixelRowWidth; ++j)
+                for (int j = 1; j < pixelRowWidth - 1; ++j)
                 {
                     this.ApplyTransform(sourceBytes, imageBytes, i, j, rowWidth);
                 }

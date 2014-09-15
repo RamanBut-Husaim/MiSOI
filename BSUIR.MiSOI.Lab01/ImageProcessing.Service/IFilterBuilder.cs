@@ -7,5 +7,7 @@
         IFilter CreateStampingFilter();
 
         IFilter CreateStampingLinearFilter();
+
+        IFilter CreateBinaryHalftoneFilter();
     }
 }

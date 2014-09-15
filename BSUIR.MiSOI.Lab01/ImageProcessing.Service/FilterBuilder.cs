@@ -16,5 +16,10 @@
         {
             return new LinearStampingFilter();
         }
+
+        public IFilter CreateBinaryHalftoneFilter()
+        {
+            return new BinaryHalftoneFilter();
+        }
     }
 }

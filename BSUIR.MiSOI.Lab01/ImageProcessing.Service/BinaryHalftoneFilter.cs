@@ -45,7 +45,9 @@ namespace ImageProcessing.Service
                                + (src[i * rowWidth + j * 3 + 1] * GFactor)
                                + (src[i * rowWidth + j * 3 + 2] * RFactor);
             byte newValue = 0;
-            if (intension / (Dither4.Rank * Dither4.Rank) > Dither4[i % Dither4.Rank][j % Dither4.Rank])
+            double t = (Byte.MaxValue*(Dither4[i%Dither4.Rank][j%Dither4.Rank] + 0.5))/(Dither4.Rank*Dither4.Rank);
+
+            if (intension > t)
             {
                 newValue = Byte.MaxValue;
             }

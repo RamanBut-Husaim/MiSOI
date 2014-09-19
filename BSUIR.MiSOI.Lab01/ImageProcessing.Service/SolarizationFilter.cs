@@ -1,4 +1,6 @@
-﻿namespace ImageProcessing.Service
+﻿using System;
+
+namespace ImageProcessing.Service
 {
     internal sealed class SolarizationFilter : LinearFilterBase
     {
@@ -24,9 +26,9 @@
             {
                 double intensity = (imageBytes[i] * BFactor) + (imageBytes[i + 1] * GFactor) + (imageBytes[i + 2] * RFactor);
                 double newIntensity = this._kCoef * intensity * (maxIntensity - intensity);
-                imageBytes[i] = (byte)(newIntensity / BFactor);
-                imageBytes[i + 1] = (byte)(newIntensity / GFactor);
-                imageBytes[i + 2] = (byte)(newIntensity / RFactor);
+                imageBytes[i] = (byte) (newIntensity%byte.MaxValue);
+                imageBytes[i + 1] = (byte) (newIntensity%byte.MaxValue);                                               
+                imageBytes[i + 2] = (byte) (newIntensity%byte.MaxValue);
             }
         }
     }

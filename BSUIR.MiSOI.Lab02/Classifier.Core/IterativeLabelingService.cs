@@ -75,18 +75,18 @@ namespace Classifier.Core
 
         private void LinkPolygons()
         {
+            int polygonIndex = 0;
             for (int i = 1; i <= this._areaCount; ++i)
             {
                 if (this._polygons.ContainsKey(i) == false)
                 {
-                    var polygon = new Polygon(i);
+                    var polygon = new Polygon(polygonIndex++);
                     foreach (HashSet<int> equalityChain in this._equalityChains)
                     {
                         if (equalityChain.Contains(i))
                         {
                             foreach (int equalityClass in equalityChain)
                             {
-                                //this._polygons[equalityClass] = polygon;
                                 this._polygons.Add(equalityClass, polygon);
                             }
                         }
@@ -183,50 +183,5 @@ namespace Classifier.Core
             }
             while (buffer.Count > 0);
         }
-
-        //private void ResolveEqualityChains()
-        //{
-        //    for (int i = 0; i < this._equalityClasses.Count - 1; ++i)
-        //    {
-        //        Tuple<int, int> currentClass = this._equalityClasses[i];
-        //        int index = this.GetEqualityChainIndex(currentClass);
-        //        this._equalityChains[index].Add(currentClass.Item1);
-        //        this._equalityChains[index].Add(currentClass.Item2);
-        //        for (int j = i + 1; j < this._equalityClasses.Count; ++j)
-        //        {
-        //            Tuple<int, int> nextClass = this._equalityClasses[j];
-        //            if (currentClass.Item1 == nextClass.Item1 || 
-        //                currentClass.Item1 == nextClass.Item2 || 
-        //                currentClass.Item2 == nextClass.Item1 || 
-        //                currentClass.Item2 == nextClass.Item2)
-        //            {
-        //                this._equalityChains[index].Add(nextClass.Item1);
-        //                this._equalityChains[index].Add(nextClass.Item2);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private int GetEqualityChainIndex(Tuple<int, int> equalityClass)
-        //{
-        //    int index = -1;
-
-        //    for (int i = 0; i < this._equalityChains.Count; ++i)
-        //    {
-        //        if (this._equalityChains[i].Contains(equalityClass.Item1) || this._equalityChains[i].Contains(equalityClass.Item2))
-        //        {
-        //            index = i;
-        //            break;
-        //        }
-        //    }
-
-        //    if (index == -1)
-        //    {
-        //        this._equalityChains.Add(new HashSet<int>());
-        //        index = this._equalityChains.Count - 1;
-        //    }
-
-        //    return index;
-        //}
     }
 }

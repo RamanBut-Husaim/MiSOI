@@ -36,7 +36,7 @@ namespace Classifier.Core
         {
             IList<Polygon> polygons = labelingService.Process(this._imageWrapper);
             this.InitializeBackgroundColor();
-            this.ColorPolygons(polygons);
+            this.FilterPolygons(polygons);
             return polygons.Where(p => p.Pixels.Count > AreaTreshold).ToList();
         }
 
@@ -47,18 +47,11 @@ namespace Classifier.Core
             this._backgroundColor = Math.Max(blackPixels, whitePixels) == blackPixels ? 0 : byte.MaxValue;
         }
 
-        private void ColorPolygons(IList<Polygon> polygons)
+        private void FilterPolygons(IList<Polygon> polygons)
         {
             foreach (var polygon in polygons)
             {
-                if (polygon.Pixels.Count > AreaTreshold)
-                {
-                    foreach (var pixel in polygon.Pixels)
-                    {
-                        this._imageWrapper[pixel.X, pixel.Y] = (byte)(pixel.Color - (polygon.Index * 30));
-                    }
-                }
-                else
+                if (polygon.Pixels.Count <= AreaTreshold)
                 {
                     foreach (var pixel in polygon.Pixels)
                     {
@@ -82,6 +75,37 @@ namespace Classifier.Core
             this._image.UnlockBits(bitmapData);
 
             this._image.Save(filePath);
+        }
+
+        public void Save(string filePath, IList<Polygon> polygons)
+        {
+            var rect = new Rectangle(0, 0, this._image.Width, this._image.Height);
+            BitmapData bitmapData = this._image.LockBits(rect, ImageLockMode.ReadWrite, this._image.PixelFormat);
+            IntPtr startPtr = bitmapData.Scan0;
+
+            int imageSize = Math.Abs(bitmapData.Stride) * this._image.Height;
+
+            byte[] bytes = this._imageWrapper.ToByteArray();
+
+            foreach (Polygon t in polygons)
+            {
+                this.ColorizePolygon(t, bytes, bitmapData.Stride);
+            }
+
+            Marshal.Copy(bytes, 0, startPtr, imageSize);
+            this._image.UnlockBits(bitmapData);
+
+            this._image.Save(filePath);
+        }
+
+        private void ColorizePolygon(Polygon polygon, byte[] imageBytes, int stride)
+        {
+            foreach (var pixel in polygon.Pixels)
+            {
+                imageBytes[(stride * pixel.X) + (pixel.Y * 3)] = polygon.Color.B;
+                imageBytes[(stride * pixel.X) + (pixel.Y * 3) + 1] = polygon.Color.G;
+                imageBytes[(stride * pixel.X) + (pixel.Y * 3) + 2] = polygon.Color.R;
+            }
         }
 
         public void Dispose()

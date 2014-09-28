@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Classifier.Core
 {
@@ -13,5 +9,7 @@ namespace Classifier.Core
         IList<Polygon> ApplyLabeling(ILabelingService labelingService);
 
         void Save(string filePath);
+
+        void Save(string filePath, IList<Polygon> polygons);
     }
 }

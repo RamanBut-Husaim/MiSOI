@@ -15,11 +15,13 @@ namespace Classifier.Runner
         {
             string filePath = "img3.jpg";
             string outputFile = "result.jpg";
+            int classNumber = 6;
 
             IImageBinarizer imageBinarizer = new MinimumErrorThresholder();
             IImageProcessor imageProcessor = new ImageProcessor(filePath);
             ILabelingService labelingService = new IterativeLabelingService();
-            var classificationService = new ClassificationService(imageBinarizer, imageProcessor, labelingService);
+            IDistanceCalculator<ClassificationUnit> euclidian = new EuclideanDistanceCalculator<ClassificationUnit>();
+            var classificationService = new ClassificationService(imageBinarizer, imageProcessor, labelingService, euclidian, classNumber);
             classificationService.Classify();
             classificationService.Save(outputFile);
         }

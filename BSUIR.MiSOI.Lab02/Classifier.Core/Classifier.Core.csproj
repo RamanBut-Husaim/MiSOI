@@ -41,12 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassificationService.cs" />
+    <Compile Include="ClassificationUnit.cs" />
+    <Compile Include="EuclideanDistanceCalculator.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IClassifiable.cs" />
+    <Compile Include="IDistanceCalculator.cs" />
     <Compile Include="IImageBinarizer.cs" />
     <Compile Include="IImageProcessor.cs" />
     <Compile Include="ILabelingService.cs" />
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="ImageWrapper.cs" />
     <Compile Include="IterativeLabelingService.cs" />
+    <Compile Include="Kernel.cs" />
     <Compile Include="MinimumErrorThresholder.cs" />
     <Compile Include="Pixel.cs" />
     <Compile Include="Polygon.cs" />

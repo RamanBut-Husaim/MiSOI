@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Classifier.Core
@@ -18,6 +19,7 @@ namespace Classifier.Core
         {
             this._pixels = new List<Pixel>();
             this._index = index;
+            this.Color = Color.White;
         }
 
         public IList<Pixel> Pixels
@@ -108,9 +110,11 @@ namespace Classifier.Core
                     this._orientiation = 0.5d * Math.Atan(2 * m11 / (m20 - m02));
                 }
 
-                return this._orientiation;
+                return Math.Abs(this._orientiation);
             }
         }
+
+        public Color Color { get; set; }
 
         private double CalculateDiscreteCentralMoment(int i, int j)
         {

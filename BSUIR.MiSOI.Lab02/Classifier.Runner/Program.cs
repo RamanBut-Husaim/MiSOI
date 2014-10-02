@@ -13,7 +13,7 @@ namespace Classifier.Runner
     {
         public static void Main(string[] args)
         {
-            string filePath = "img3.jpg";
+            string filePath = "img5.jpg";
             string outputFile = "result.jpg";
             int classNumber = 6;
 

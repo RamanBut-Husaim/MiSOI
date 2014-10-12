@@ -19,7 +19,7 @@ namespace LoG.Runner
           }
 
           IFilterBuilder filterBuilder = new LogFilterBuilder();
-          IBlobDetector blobDetector = new BlobDetector(filterBuilder, "sunflower.jpg");
+          IBlobDetector blobDetector = new BlobDetector(filterBuilder, "sunflower3.jpg");
           blobDetector.DetectBlobs("res.jpg");
         }
     }

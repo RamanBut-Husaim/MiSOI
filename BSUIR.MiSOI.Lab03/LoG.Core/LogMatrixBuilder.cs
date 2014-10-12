@@ -22,8 +22,12 @@ namespace LoG.Core
     {
       _sigma = sigma;
 
-      var width = (int)((3.35 * _sigma) + 0.33);
-      int matrixSize = width + width + 1;
+      int matrixSize = (int)Math.Ceiling(6 * sigma);
+      matrixSize = matrixSize % 2 == 0 ? matrixSize + 1 : matrixSize;
+
+      int width = matrixSize / 2 + 1;
+      //var width = (int)((3.35 * _sigma) + 0.33);
+      //int matrixSize = width + width + 1;
 
       this.CreateLogMatrix(matrixSize);
       for (int i = 0; i < matrixSize; ++i)

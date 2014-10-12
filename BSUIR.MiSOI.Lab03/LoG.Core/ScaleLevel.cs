@@ -1,31 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LoG.Core
 {
   internal sealed class ScaleLevel
   {
+    private const double IntensityThreshold = 40;
+
     private readonly IFilter _filter;
 
     private readonly ImageWrapper _imageWrapper;
+
+    private readonly IList<Blob> _blobs; 
 
     public ScaleLevel(IFilter filter, ImageWrapper imageWrapper)
     {
       _filter = filter;
       _imageWrapper = imageWrapper;
+      _blobs = new List<Blob>();
     }
+
+    public IList<Blob> Blobs
+    {
+      get { return _blobs; }
+    } 
 
     public ImageWrapper Image
     {
       get { return _imageWrapper; }
     }
 
-    public void ApplyTransform()
+    public double Sigma
+    {
+      get { return ((LogFilter)_filter).Sigma; }
+    }
+
+    public double T
+    {
+      get { return ((LogFilter)_filter).T; }
+    }
+
+    public ScaleLevel ApplyTransform()
     {
       _filter.Apply(_imageWrapper);
+      return this;
+    }
+
+    public void FindBlobs()
+    {
+      for (int i = 1; i < _imageWrapper.Height - 1; ++i)
+      {
+        for (int j = 1; j < _imageWrapper.Width - 1; ++j)
+        {
+          if (this.IsMaximum(i, j))
+          {
+            int y = j + (int)(this.T * 5);
+            var blob = new Blob(i, y, ((LogFilter)_filter).Sigma, this.Image[i, j]);
+            if (blob.Area > 1000)
+            {
+              this.Blobs.Add(blob);
+            }
+          }
+        }
+      }
+    }
+
+    private bool IsMaximum(int i, int j)
+    {
+      return this.Image[i - 1, j - 1] <= this.Image[i, j] && this.Image[i - 1, j] <= this.Image[i, j] && this.Image[i - 1, j + 1] <= this.Image[i, j]
+             && this.Image[i, j - 1] <= this.Image[i, j] && this.Image[i, j + 1] <= this.Image[i, j] && this.Image[i + 1, j - 1] <= this.Image[i, j]
+             && this.Image[i + 1, j] <= this.Image[i, j] && this.Image[i + 1, j + 1] <= this.Image[i, j] && this.Image[i, j] < IntensityThreshold;
     }
   }
 }

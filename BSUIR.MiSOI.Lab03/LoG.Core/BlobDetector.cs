@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace LoG.Core
@@ -18,13 +13,16 @@ namespace LoG.Core
     private const double FinalT = 3.0d;
 
     private readonly IFilterBuilder _filterBuilder;
+    private readonly DataInitializer _dataInitializer;
     private readonly string _path;
     private readonly ImageWrapper _originalImage;
-    private readonly ScaleLevel[] _scaleSpace; 
+    private ScaleLevel[] _scaleSpace;
+    private bool _initialized = false;
 
     public BlobDetector(IFilterBuilder filterBuilder, string path)
     {
       _filterBuilder = filterBuilder;
+      _dataInitializer = new DataInitializer(path);
       _path = path;
       _originalImage = new ImageWrapper(new Bitmap(path));
       _scaleSpace = new ScaleLevel[(int)(((FinalT - InitialT) / Step) + 1)];
@@ -33,47 +31,70 @@ namespace LoG.Core
     public void DetectBlobs(string resultFile)
     {
       this.CreateScaleSpace();
+      var blobPartitioner = new BlobPartitioner(_scaleSpace);
       this.Save();
+      IList<Blob> blobs = blobPartitioner.Process();
+      this.ApplyBlobs(blobs);
+    }
+
+    private void ApplyBlobs(IList<Blob> blobs)
+    {
+      using (var bitmap = new Bitmap(this._path))
+      {
+        foreach (var blob in blobs)
+        {
+          IList<Point> points = blob.GetPoints();
+          foreach (Point point in points)
+          {
+            if (point.X > 0 && point.X < bitmap.Height && point.Y > 0 && point.Y < bitmap.Width)
+            {
+              bitmap.SetPixel(point.Y, point.X, Color.Red);
+            }
+          }
+        }
+
+        bitmap.Save("res.jpg");
+      }
     }
 
     private void CreateScaleSpace()
     {
-      Parallel.For(
-        0,
-        (int)(((FinalT - InitialT) / Step) + 1),
-        (i, state) =>
-          {
-            IFilter filter = _filterBuilder.Build(InitialT + (i * Step));
-            var scaleLevel = new ScaleLevel(filter, this._originalImage.GetDeepCopy());
-            scaleLevel.ApplyTransform();
-            _scaleSpace[i] = scaleLevel;
-          });
+      IList<ScaleLevel> scaleLevels = new List<ScaleLevel>();
+      if (_dataInitializer.DataExists())
+      {
+        scaleLevels = _dataInitializer.ReadData(_filterBuilder);
+      }
+
+      if (scaleLevels.Count == 0)
+      {
+        Parallel.For(
+          0,
+          (int)(((FinalT - InitialT) / Step) + 1),
+          (i, state) =>
+            {
+              IFilter filter = _filterBuilder.Build(InitialT + (i * Step));
+              var scaleLevel = new ScaleLevel(filter, this._originalImage.GetDeepCopy());
+              scaleLevel.ApplyTransform().FindBlobs();
+              _scaleSpace[i] = scaleLevel;
+            });
+      }
+      else
+      {
+        _scaleSpace = scaleLevels.ToArray();
+        Parallel.ForEach(_scaleSpace, (level) => level.FindBlobs());
+        _initialized = true;
+      }
+      _scaleSpace = _scaleSpace.OrderBy(p => p.Sigma).ToArray();
     }
 
     private void Save()
     {
-      for (int i = 0; i < _scaleSpace.Length; ++i)
+      if (_initialized == false)
       {
-        this.Save(i.ToString(CultureInfo.InvariantCulture) + ".jpg", _scaleSpace[i]);
-      }
-    }
-
-    private void Save(string filePath, ScaleLevel scaleLevel)
-    {
-      using (var image = new Bitmap(_path))
-      {
-        var rect = new Rectangle(0, 0, image.Width, image.Height);
-        BitmapData bitmapData = image.LockBits(rect, ImageLockMode.ReadWrite, image.PixelFormat);
-        IntPtr startPtr = bitmapData.Scan0;
-
-        int imageSize = Math.Abs(bitmapData.Stride) * image.Height;
-
-        byte[] bytes = scaleLevel.Image.ToByteArray();
-
-        Marshal.Copy(bytes, 0, startPtr, imageSize);
-        image.UnlockBits(bitmapData);
-
-        image.Save(Path.Combine("LoG", filePath));
+        for (int i = 0; i < _scaleSpace.Length; ++i)
+        {
+          _dataInitializer.Save(i.ToString(CultureInfo.InvariantCulture), _scaleSpace[i]);
+        }
       }
     }
   }

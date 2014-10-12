@@ -42,6 +42,11 @@
   <ItemGroup>
     <Compile Include="Blob.cs" />
     <Compile Include="BlobDetector.cs" />
+    <Compile Include="BlobPartition.cs" />
+    <Compile Include="BlobPartitioner.cs" />
+    <Compile Include="DataInitializer.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IBlobPartitioner.cs" />
     <Compile Include="LogFilterBuilder.cs" />
     <Compile Include="IBlobDetector.cs" />
     <Compile Include="IFilter.cs" />
@@ -52,6 +57,7 @@
     <Compile Include="LogMatrixBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScaleLevel.cs" />
+    <Compile Include="ScaleMetadata.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

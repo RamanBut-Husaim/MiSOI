@@ -13,9 +13,9 @@ namespace Classifier.Runner
     {
         public static void Main(string[] args)
         {
-            string filePath = "img5.jpg";
+            string filePath = "sunflower.jpg";
             string outputFile = "result.jpg";
-            int classNumber = 6;
+            int classNumber = 5;
 
             IImageBinarizer imageBinarizer = new MinimumErrorThresholder();
             IImageProcessor imageProcessor = new ImageProcessor(filePath);

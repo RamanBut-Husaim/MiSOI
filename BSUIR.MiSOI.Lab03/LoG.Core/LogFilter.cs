@@ -65,7 +65,7 @@ namespace LoG.Core
             }
           }
 
-          imageWrapper[i, j] = (byte)Math.Abs(value);
+          imageWrapper[i, j] = value;
         }
       }
     }

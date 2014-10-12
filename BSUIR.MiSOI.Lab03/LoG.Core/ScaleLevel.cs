@@ -4,7 +4,9 @@ namespace LoG.Core
 {
   internal sealed class ScaleLevel
   {
-    private const double IntensityThreshold = 40;
+    private const double IntensityThreshold = 100;
+    private const double SizeThreshold = 1000;
+    private const double ShiftThreshold = 20;
 
     private readonly IFilter _filter;
 
@@ -53,9 +55,9 @@ namespace LoG.Core
         {
           if (this.IsMaximum(i, j))
           {
-            int y = j + (int)(this.T * 5);
+            int y = j - (int)(this.T * ShiftThreshold);
             var blob = new Blob(i, y, ((LogFilter)_filter).Sigma, this.Image[i, j]);
-            if (blob.Area > 1000)
+            if (blob.Area > SizeThreshold)
             {
               this.Blobs.Add(blob);
             }

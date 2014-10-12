@@ -22,7 +22,7 @@ namespace LoG.Core
     {
       _sigma = sigma;
 
-      int matrixSize = (int)Math.Ceiling(6 * sigma);
+      int matrixSize = (int)Math.Ceiling(6 * _sigma);
       matrixSize = matrixSize % 2 == 0 ? matrixSize + 1 : matrixSize;
 
       int width = matrixSize / 2 + 1;
@@ -57,7 +57,9 @@ namespace LoG.Core
 
     private double LoG(double x)
     {
-      return ((x * x) - (2 * _sigma * _sigma)) / Math.Pow(_sigma, 4) * this.Gauss(x);
+      //return (-1 / (Math.PI * _sigma * _sigma * _sigma * _sigma)) * (1 - ((x * x) / (2 * _sigma * _sigma))) * this.Gauss(x);
+      return (((x * x) - (2 * _sigma * _sigma)) / (2 * Math.PI * Math.Pow(_sigma, 4))) * this.Gauss(x);
+      //return ((x * x) - (2 * _sigma * _sigma)) * this.Gauss(x);
     }
   }
 }

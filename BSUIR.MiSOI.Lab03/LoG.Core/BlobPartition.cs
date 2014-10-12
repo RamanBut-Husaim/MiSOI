@@ -5,7 +5,7 @@ namespace LoG.Core
 {
   internal sealed class BlobPartition
   {
-    private const double OverlapThreshold = 0.05d;
+    private const double OverlapThreshold = 0.25d;
     private readonly IList<Blob> _blobs;
     private readonly IList<Blob> _result;
     private readonly bool[] _kept;

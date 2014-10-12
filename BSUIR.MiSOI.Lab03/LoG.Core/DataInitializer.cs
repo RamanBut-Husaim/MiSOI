@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -54,7 +53,7 @@ namespace LoG.Core
           {
             var deserilizer = new BinaryFormatter();
             var metadata = (ScaleMetadata)deserilizer.Deserialize(stream);
-            var scaleLevel = new ScaleLevel(filterBuilder.Build(metadata.T), new ImageWrapper(new Bitmap(metadata.FileName)));
+            var scaleLevel = new ScaleLevel(filterBuilder.Build(metadata.T), metadata.Image);
             result.Add(scaleLevel);
           }
         }
@@ -98,7 +97,7 @@ namespace LoG.Core
       using (var file = new FileStream(Path.Combine("Log", filePath + Extension), FileMode.Create, FileAccess.Write, FileShare.None))
       {
         var serializer = new BinaryFormatter();
-        var obj = new ScaleMetadata { FileName = Path.Combine("LoG", filePath + ".jpg"), T = scaleLevel.T };
+        var obj = new ScaleMetadata { Image = scaleLevel.Image, T = scaleLevel.T };
         serializer.Serialize(file, obj);
       }
     }

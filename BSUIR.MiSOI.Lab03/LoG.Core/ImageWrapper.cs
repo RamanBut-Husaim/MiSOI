@@ -5,9 +5,10 @@ using System.Runtime.InteropServices;
 
 namespace LoG.Core
 {
+  [Serializable]
   public sealed class ImageWrapper
   {
-    private byte[][] _imageData;
+    private double[][] _imageData;
 
     private int _width;
 
@@ -25,11 +26,11 @@ namespace LoG.Core
       _width = other.Width;
       _height = other.Height;
       _stride = other._stride;
-      _imageData = new byte[other.Height][];
+      _imageData = new double[other.Height][];
 
       for (int i = 0; i < this.Height; ++i)
       {
-        _imageData[i] = new byte[other.Width];
+        _imageData[i] = new double[other.Width];
         for (int j = 0; j < this.Width; ++j)
         {
           _imageData[i][j] = other._imageData[i][j];
@@ -53,7 +54,7 @@ namespace LoG.Core
       }
     }
 
-    public byte this[int i, int j]
+    public double this[int i, int j]
     {
       get
       {
@@ -75,9 +76,9 @@ namespace LoG.Core
       {
         for (int j = 0; j < this._width; ++j)
         {
-          result[(i * this._stride) + (j * 3)] = this._imageData[i][j];
-          result[(i * this._stride) + ((j * 3) + 1)] = this._imageData[i][j];
-          result[(i * this._stride) + ((j * 3) + 2)] = this._imageData[i][j];
+          result[(i * this._stride) + (j * 3)] = (byte)Math.Abs(this._imageData[i][j]);
+          result[(i * this._stride) + ((j * 3) + 1)] = (byte)Math.Abs(this._imageData[i][j]);
+          result[(i * this._stride) + ((j * 3) + 2)] = (byte)Math.Abs(this._imageData[i][j]);
         }
       }
 
@@ -99,20 +100,20 @@ namespace LoG.Core
       var rgbBytes = new byte[imageSize];
       Marshal.Copy(startPtr, rgbBytes, 0, imageSize);
 
-      this._imageData = new byte[bitMap.Height][];
+      this._imageData = new double[bitMap.Height][];
       this._width = bitMap.Width;
       this._height = bitMap.Height;
       this._stride = bitmapData.Stride;
 
       for (int i = 0; i < bitMap.Height; ++i)
       {
-        this._imageData[i] = new byte[bitMap.Width];
+        this._imageData[i] = new double[bitMap.Width];
         for (int j = 0; j < bitMap.Width; ++j)
         {
           byte b = rgbBytes[(i * bitmapData.Stride) + (j * 3)];
           byte g = rgbBytes[(i * bitmapData.Stride) + ((j * 3) + 1)];
           byte r = rgbBytes[(i * bitmapData.Stride) + ((j * 3) + 2)];
-          this._imageData[i][j] = (byte)(((int)r + (int)g + (int)b) / 3);
+          this._imageData[i][j] = ((int)r + (int)g + (int)b) / 3.0d;
         }
       }
 

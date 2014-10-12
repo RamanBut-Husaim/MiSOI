@@ -7,12 +7,13 @@ namespace LoG.Core
   public struct Blob
   {
     private const int PointNumber = 200;
+    private const double Step = Math.PI / PointNumber;
     private readonly int _x;
     private readonly int _y;
     private readonly double _sigma;
-    private readonly byte _intensity;
+    private readonly double _intensity;
 
-    public Blob(int x, int y, double sigma, byte intensity)
+    public Blob(int x, int y, double sigma, double intensity)
     {
       this._x = x;
       this._y = y;
@@ -40,7 +41,7 @@ namespace LoG.Core
       get { return this.Sigma * 1.5d; }
     }
 
-    public byte Intensity
+    public double Intensity
     {
       get { return _intensity; }
     }
@@ -52,9 +53,8 @@ namespace LoG.Core
 
     public IList<Point> GetPoints()
     {
-      double step = Math.PI * 2 / PointNumber;
-      IList<Point> result = new List<Point>(PointNumber);
-      for (double angle = 0.0d; angle < 2 * Math.PI; angle += step)
+      IList<Point> result = new List<Point>(Blob.PointNumber);
+      for (double angle = 0.0d; angle < 2 * Math.PI; angle += Blob.Step)
       {
         int x = this.X + (int)(this.Radius * Math.Cos(angle));
         int y = this.Y + (int)(this.Radius * Math.Sin(angle));

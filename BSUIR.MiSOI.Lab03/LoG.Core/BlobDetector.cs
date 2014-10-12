@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Point = System.Drawing.Point;
 
 namespace LoG.Core
 {
@@ -80,7 +81,8 @@ namespace LoG.Core
       }
       else
       {
-        _scaleSpace = scaleLevels.ToArray();
+        int number = (int)(((FinalT - InitialT) / Step) + 1);
+        _scaleSpace = scaleLevels.Take(number).ToArray();
         Parallel.ForEach(_scaleSpace, (level) => level.FindBlobs());
         _initialized = true;
       }

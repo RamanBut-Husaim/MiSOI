@@ -20,7 +20,7 @@ namespace NeuralNetworks.Hopfield.Core
         for (int j = 0; j < bitMap.Width; ++j)
         {
           Color pixel = bitMap.GetPixel(i, j);
-          int byteValue = (pixel.R + pixel.B + pixel.G) / 3;
+          int byteValue = ((int)pixel.R + pixel.B + pixel.G) / 3;
           result[index++] = byteValue < ImageBinarizer.Threshold;
         }
       }

@@ -6,7 +6,7 @@ namespace BinaryRandimizer.Core
     public sealed class BinaryRandomizer
     {
       private const string FolderName = "Randomized";
-      private static readonly int[] RandomizationPercents = { 10, 20, 30, 35, 40, 50, 60, 70, 75, 80 };
+      private static readonly int[] RandomizationPercents = { 10, 20, 30, 35, 40, 50, 60, 70, 75, 80, 85, 90 };
       private readonly string _sourceImagePath;
 
       public BinaryRandomizer(string filePath)

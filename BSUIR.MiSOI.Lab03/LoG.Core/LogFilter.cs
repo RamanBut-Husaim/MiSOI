@@ -55,7 +55,7 @@ namespace LoG.Core
 
             for (int jj = 0; jj < logMatrixSize; ++jj)
             {
-              int m = j - logMatrixSize + jj;
+              int m = j - halfSize + jj;
               if (m < 0 || m >= imageWrapper.Width)
               {
                 continue;
